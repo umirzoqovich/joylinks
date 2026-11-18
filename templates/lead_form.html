@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ center_name }} — Rasmiy Qabul Sahifasi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: radial-gradient(circle at 50% -10%, #0d4a4d 0%, #041f24 40%, #030a10 100%);
+        }
+        .teal-glow {
+            box-shadow: 0 0 35px rgba(0, 210, 180, 0.25);
+        }
+        .btn-gradient {
+            background: linear-gradient(135deg, #00d2b4 0%, #00b4d8 50%, #0096c7 100%);
+        }
+        .btn-gradient:hover {
+            background: linear-gradient(135deg, #05e6c6 0%, #00c4ec 50%, #00a4db 100%);
+        }
+    </style>
+
+    <!-- Meta Pixel Code -->
+    {% if pixel_id %}
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '{{ pixel_id }}');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id={{ pixel_id }}&ev=PageView&noscript=1"
+    /></noscript>
+    {% endif %}
+    <!-- End Meta Pixel Code -->
+</head>
+<body class="min-h-screen flex items-center justify-center p-3 sm:p-6 text-slate-800">
+
+    <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl overflow-hidden p-6 sm:p-8 border border-teal-500/20 teal-glow relative">
+        
+        <!-- Header: Official Logo & Title -->
+        <div class="text-center mb-6">
+            <div class="flex justify-center mb-3">
+                <img src="/static/logo.png" alt="Joylinks IT Akademiyasi" 
+                    class="w-28 h-28 object-contain">
+            </div>
+            
+            <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-tight">
+                {{ center_name }}
+            </h1>
+            <p class="text-xs sm:text-sm text-slate-500 mt-2 font-medium">
+                Zamonaviy IT sohalarini professional darajada o'rganing. O'zingizga mos yo'nalishni tanlang!
+            </p>
+        </div>
+
+        <!-- Lead Form -->
+        <form id="leadForm" onsubmit="handleSubmit(event)" class="space-y-4">
+            
+            <input type="hidden" id="ref" value="{{ ref or 'Instagram Target' }}">
+
+            <!-- Ism familiya -->
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                    <i class="fa-solid fa-user text-teal-500 mr-1.5"></i> Ism va Familiyangiz *
+                </label>
+                <input type="text" id="full_name" required placeholder="Masalan: Sardor Karimov" 
+                    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 font-semibold focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition">
+            </div>
+
+            <!-- Telefon raqam -->
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                    <i class="fa-solid fa-phone text-teal-500 mr-1.5"></i> Telefon raqamingiz *
+                </label>
+                <input type="tel" id="phone" required placeholder="+998 90 123 45 67" value="+998 "
+                    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 font-mono font-bold focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition">
+            </div>
+
+            <!-- Kurs tanlash -->
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                    <i class="fa-solid fa-graduation-cap text-teal-500 mr-1.5"></i> Qaysi kursga qiziqyapsiz? *
+                </label>
+                <select id="course" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 font-bold focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition cursor-pointer">
+                    <option value="Kompyuter savodxonligi" {% if 'savod' in (course or '').lower() or 'kompyuter' in (course or '').lower() %}selected{% endif %}>🖥️ Kompyuter savodxonligi</option>
+                    <option value="IT Foundation" {% if 'foundation' in (course or '').lower() %}selected{% endif %}>🚀 IT Foundation</option>
+                    <option value="Frontend dasturlash" {% if 'frontend' in (course or '').lower() %}selected{% endif %}>💻 Frontend dasturlash</option>
+                    <option value="Backend dasturlash" {% if 'backend' in (course or '').lower() %}selected{% endif %}>⚙️ Backend dasturlash</option>
+                    <option value="English for IT" {% if 'english' in (course or '').lower() %}selected{% endif %}>🇬🇧 English for IT</option>
+                    <option value="Kiberxavfsizlik" {% if 'kiber' in (course or '').lower() or 'cyber' in (course or '').lower() %}selected{% endif %}>🛡️ Kiberxavfsizlik</option>
+                    <option value="Robototexnika" {% if 'robot' in (course or '').lower() %}selected{% endif %}>🤖 Robototexnika</option>
+                    <option value="Prompt Engineering (AI bilan ishlash)" {% if 'prompt' in (course or '').lower() or 'ai' in (course or '').lower() %}selected{% endif %}>🧠 Prompt Engineering (AI bilan ishlash)</option>
+                </select>
+            </div>
+
+            <!-- Hozirgi darajasi -->
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                    <i class="fa-solid fa-layer-group text-teal-500 mr-1.5"></i> Hozirgi darajangiz *
+                </label>
+                <select id="level" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 font-semibold focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition cursor-pointer">
+                    <option value="Noldan boshlovchi">Noldan (Boshlang'ich bilimim yo'q)</option>
+                    <option value="Boshlang'ich (Elementary)">Boshlang'ich bilimga egaman</option>
+                    <option value="O'rta (Intermediate)">O'rta darajadaman</option>
+                    <option value="Kuchli (Advanced)">Kuchli darajadaman</option>
+                </select>
+            </div>
+
+            <!-- Qulay vaqt -->
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                    <i class="fa-regular fa-clock text-teal-500 mr-1.5"></i> Qulay dars vaqti
+                </label>
+                <div class="grid grid-cols-3 gap-2 text-xs">
+                    <label class="flex items-center justify-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-teal-50 transition">
+                        <input type="radio" name="time_pref" value="Ertalab (09:00 - 13:00)" class="hidden peer">
+                        <span class="peer-checked:font-bold peer-checked:text-teal-700">🌅 Ertalab</span>
+                    </label>
+                    <label class="flex items-center justify-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-teal-50 transition">
+                        <input type="radio" name="time_pref" value="Kunduzi (14:00 - 18:00)" class="hidden peer">
+                        <span class="peer-checked:font-bold peer-checked:text-teal-700">☀️ Kunduzi</span>
+                    </label>
+                    <label class="flex items-center justify-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-teal-50 transition">
+                        <input type="radio" name="time_pref" value="Kechki (18:30 - 21:00)" class="hidden peer" checked>
+                        <span class="peer-checked:font-bold peer-checked:text-teal-700">🌙 Kechki</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Submit Button (Direct, Professional, High-Converting) -->
+            <button type="submit" id="submitBtn" class="w-full py-4 mt-2 btn-gradient text-slate-950 font-black rounded-xl shadow-lg shadow-teal-500/25 flex items-center justify-center space-x-2 text-base transition transform active:scale-98">
+                <span>Kursga Ro'yxatdan O'tish</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+            <p class="text-[11px] text-slate-400 text-center mt-2.5 font-medium">
+                🔒 Shaxsiy ma'lumotlaringiz xavfsizligi kafolatlanadi.
+            </p>
+        </form>
+
+        <!-- Success Screen -->
+        <div id="successScreen" class="hidden text-center py-6">
+            <div class="w-20 h-20 bg-teal-100 text-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl shadow-inner">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h2 class="text-2xl font-black text-slate-900">Arizangiz qabul qilindi! 🎉</h2>
+            <p class="text-sm text-slate-600 mt-2 font-medium">
+                Rahmat! <b>{{ center_name }}</b> mutaxassisi tez orada siz bilan bog'lanib, guruhlar va dars jadvali bo'yicha batafsil ma'lumot beradi.
+            </p>
+
+            <div class="mt-5 p-4 bg-slate-50 border border-slate-200 rounded-2xl text-left text-xs text-slate-700 space-y-2">
+                <p><b>Ism:</b> <span id="resName" class="font-bold text-slate-900"></span></p>
+                <p><b>Kurs:</b> <span id="resCourse" class="font-bold text-teal-700"></span></p>
+                <p><b>Telefon:</b> <span id="resPhone" class="font-mono font-bold text-slate-900"></span></p>
+                <p><b>Holati:</b> <span class="font-bold text-emerald-600">Qabul qilindi ✅</span></p>
+            </div>
+
+            <!-- Telegram Channel CTA -->
+            <div class="mt-5 p-4 bg-teal-50 border border-teal-200/80 rounded-2xl text-center">
+                <p class="text-xs font-bold text-teal-950">📢 Rasmiy Telegram kanalimizga a'zo bo'ling</p>
+                <p class="text-[11px] text-teal-800 mt-1 font-medium">Dars jadvali, foydali qo'llanmalar va yangiliklarni kuzatib boring!</p>
+                <a href="{{ channel_url or 'https://t.me' }}" target="_blank" class="mt-3 inline-flex items-center justify-center w-full py-2.5 btn-gradient text-slate-950 font-black rounded-xl text-xs shadow-md transition">
+                    <i class="fa-brands fa-telegram mr-1.5 text-sm"></i> Telegram Kanalga O'tish
+                </a>
+            </div>
+
+            <button onclick="location.reload()" class="mt-4 text-slate-400 text-xs hover:text-teal-600 font-semibold transition">
+                Yana ariza qoldirish
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        // Automatic phone number formatting for +998
+        const phoneInput = document.getElementById('phone');
+        phoneInput.addEventListener('input', function(e) {
+            let val = e.target.value.replace(/\D/g, '');
+            if (!val.startsWith('998')) {
+                val = '998' + val;
+            }
+            val = val.substring(0, 12); // 998 + 9 digits
+
+            let formatted = '+998';
+            if (val.length > 3) formatted += ' ' + val.substring(3, 5);
+            if (val.length > 5) formatted += ' ' + val.substring(5, 8);
+            if (val.length > 8) formatted += ' ' + val.substring(8, 10);
+            if (val.length > 10) formatted += ' ' + val.substring(10, 12);
+
+            e.target.value = formatted;
+        });
+
+        async function handleSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Yuborilmoqda...`;
+
+            const selectedTime = document.querySelector('input[name="time_pref"]:checked')?.value || "Kechki";
+            const fullName = document.getElementById('full_name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const course = document.getElementById('course').value;
+            const level = document.getElementById('level').value;
+            const ref = document.getElementById('ref').value;
+
+            const payload = {
+                full_name: fullName,
+                phone: phone,
+                course: course,
+                source: "Target Landing Form",
+                ad_name: ref,
+                level: level,
+                time_pref: selectedTime,
+                notes: `Target landing formasi orqali to'ldirildi`
+            };
+
+            try {
+                const response = await fetch('/api/leads', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    if (typeof fbq !== 'undefined') {
+                        fbq('track', 'Lead', {
+                            content_name: course,
+                            status: 'success'
+                        });
+                    }
+
+                    document.getElementById('leadForm').classList.add('hidden');
+                    document.getElementById('resName').textContent = fullName;
+                    document.getElementById('resCourse').textContent = course;
+                    document.getElementById('resPhone').textContent = phone;
+                    document.getElementById('successScreen').classList.remove('hidden');
+                } else {
+                    alert("Arizani yuborishda xatolik yuz berdi. Iltimos qayta urinib ko'ring.");
+                    btn.disabled = false;
+                    btn.innerHTML = `<span>Kursga Ro'yxatdan O'tish</span> <i class="fa-solid fa-arrow-right"></i>`;
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Internet aloqasini tekshiring!");
+                btn.disabled = false;
+                btn.innerHTML = `<span>Kursga Ro'yxatdan O'tish</span> <i class="fa-solid fa-arrow-right"></i>`;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+services:
+  crm:
+    build: .
+    container_name: joylinks_crm
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./crm_joylink.db:/app/crm_joylink.db
+      - ./.env:/app/.env
